@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^jadonsa/', include('jadonsa.urls')),
     url(r'^get/', rests.getData),
-    url(r'^getRoomId/', rests.getRoomId),
+    url(r'^getRoomId/', rests.getRoomId, name='getRoomId'),
     url(r'^getJadonsa/', rests.getJadonsa),
     url(r'^getJadonsaPandas/', rests.getJadonsaPandas),
     url(r'^setJadonsa/', rests.setJadonsa, name='setJadonsa'),

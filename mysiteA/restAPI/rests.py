@@ -29,15 +29,15 @@ def getData(request):
 
         return Response(ret)
 
-@api_view(['GET'])
-def getRoomId(request):
-    if request.method == 'GET':
-        cnx = mysql.connector.connect(**config)
-        
+def getRoomIdSub(cnx, type1, order = 'asc'):
         cursor = cnx.cursor()
         
-        query = ('select * from roomId')
-        cursor.execute(query)
+        if type1 == None:
+          query = ('select * from roomId order by type2 ' + order)
+          cursor.execute(query)
+        else:
+          query = ('select * from roomId where type1 = %s order by type2 ' + order)
+          cursor.execute(query, (type1, ))
 
         ret = list()
 
@@ -45,9 +45,32 @@ def getRoomId(request):
             ret.append({'id':roomId, 'type1':type1, 'type2':type2})
 
         cursor.close()
+
+        return ret
+
+@api_view(['GET'])
+def getRoomId(request):
+    if request.method == 'GET':
+        type1 = request.GET.get('type1')
+
+        cnx = mysql.connector.connect(**config)
+        
+        ret = list()
+
+        ret1 = getRoomIdSub(cnx, r'이유')
+        ret2 = getRoomIdSub(cnx, r'자돈1')
+        ret3 = getRoomIdSub(cnx, r'자돈2')
+        ret4 = getRoomIdSub(cnx, r'기타', 'desc')
+        ret5 = getRoomIdSub(cnx, r'total')
+
+        ret1 = ret1 + ret2
+        ret3 = ret3 + ret4
+        ret1 = ret1 + ret3
+        ret1 = ret1 + ret5
+
         cnx.close()
 
-        return Response(ret)
+        return Response(ret1)
 
 @api_view(['GET'])
 def getJadonsa(request):

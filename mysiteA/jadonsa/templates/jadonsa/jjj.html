@@ -4,7 +4,57 @@
     <head>
     </head>
    <body>
-       <script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+
+
+	<script type="text/babel">
+        var ProperListRender = React.createClass({
+          render: function() {
+            return (
+              <table>
+                {this.props.list.map(function(listValue){
+                  return (<tr>
+                              <td>{listValue.type1}-{listValue.type2}</td>
+                              <td>{listValue.id}</td>
+                              <td key={listValue.id}>0</td>
+                          </tr>);
+                })}
+              </table>
+            )
+          }
+        });
+
+	var render = function(data) {
+	  ReactDOM.render(<ProperListRender list={data} />, document.getElementById('content'));
+
+	}
+
+        function restGet(url) {
+            return jQuery.ajax({
+                url : url,
+                method: 'GET'
+            });
+        } 
+
+        $(document).ready(function () {
+            var url_roomList = "{% url 'getRoomId' %}" + "?format=json&type1=";
+            
+            restGet(url_roomList).then(function(data) {
+		console.log("jadonsa: get roomId.");
+
+		for(var i=0; i<data.length; i++){
+			console.log(data[i]);
+		}
+
+	        render(data);
+            });
+        });
+	</script>
+
 
        <form method="post" action="{% url 'setJadonsa' %}?format=json">
 	{% csrf_token %}
@@ -15,6 +65,7 @@
                 <th>Position</th>
                 <th>Office</th>
             </tr>
+
             <tr>
                 <td>Tiger Nixon</td>
                 <td><input type="text" id="row-1-age" name="row-1-age" value="61"></td>
@@ -42,5 +93,7 @@
            <input type="submit" name="Submit"/>
        </form>
        
+        <table id="content"></table>
+
     </body>
 </html>
