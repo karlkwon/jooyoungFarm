@@ -9,6 +9,7 @@ from rest_framework.views import APIView
 from .dbConfig import dbConfig
 
 import mysql.connector
+import pandas as pd
 import pandas.io.sql as sql
 import datetime
 import json
@@ -104,6 +105,9 @@ def getJadonsaPandas(request):
 
         query = "select * from jadonsa where date = %(ddd)s"
         df = sql.read_sql(query, cnx, params={"ddd":date_})
+
+        df['date'] = pd.to_datetime(df['date'])
+
 #        query = ('select * from jadonsa')
 #        df = sql.read_sql(query, cnx)
         print(df)
