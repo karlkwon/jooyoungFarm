@@ -57,7 +57,7 @@
 
 		  <tr ng-repeat="x in tableRowData">
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				{{ x.type1 + " " + x.type2 }} : {{ x.id }}
+				{{ x.type1 + " : " + x.type2 }}
 			</td>
 
 			<td ng-if="$odd" style="background-color:#f1f1f1">
@@ -73,7 +73,7 @@
 				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].panmea }}" class="mycell" name="{{x.id}}_panmea">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].sopeasa }}" class="mycell" name="{{x.id}}_dopeasa">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].dopeasa }}" class="mycell" name="{{x.id}}_dopeasa">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
 				<input type="date" value="{{ (tableData | filter:{roomId:(x.id)})[0].birth }}" class="mycell" name="{{x.id}}_birth">
@@ -88,7 +88,7 @@
 
 
 			<td ng-if="$even">
-				{{ x.type1 + " " + x.type2 }} : {{ x.id }}
+				{{ x.type1 + " : " + x.type2 }}
 			</td>
 
 			<td ng-if="$even">
@@ -104,7 +104,7 @@
 				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].panmea }}" class="mycell" name="{{x.id}}_panmea">
 			</td>
 			<td ng-if="$even">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].sopeasa }}" class="mycell" name="{{x.id}}_dopeasa">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].dopeasa }}" class="mycell" name="{{x.id}}_dopeasa">
 			</td>
 			<td ng-if="$even">
 				<input type="date" value="{{ (tableData | filter:{roomId:(x.id)})[0].birth }}" class="mycell" name="{{x.id}}_birth">
