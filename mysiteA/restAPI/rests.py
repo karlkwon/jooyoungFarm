@@ -49,6 +49,44 @@ def getRoomIdSub(cnx, type1, order = 'asc'):
 
         return ret
 
+def getLastDate2(cnx, date = None):
+        cursor = cnx.cursor()
+        
+        if date == None:
+            query = ('select distinct(jadonsa.date) from jadonsa order by jadonsa.date desc')
+            cursor.execute(query)
+        else:
+            query = ('select distinct(jadonsa.date) from jadonsa where jadonsa.date < %s order by jadonsa.date desc')
+            cursor.execute(query, (date, ))
+
+        ret = list()
+
+        for d in cursor:
+            ret.append(d[0])
+
+        cursor.close()
+
+        return ret
+
+def getJadonsaData(cnx, date_ = None):
+        cursor = cnx.cursor()
+
+        query = ('select * from jadonsa where date = %s')
+        cursor.execute(query, (date_, ))
+        
+
+        ret = list()
+
+        for (roomId, date, junip, junchul, panmea, dopeasa, birth, currentCount, description) in cursor:
+            ret.append({'roomId': roomId, 'date': date, 'junip': junip, 'junchul': junchul, \
+			'panmea': panmea, 'dopeasa': dopeasa, 'birth': birth, 'currentCount': currentCount, 'description': description})
+
+        cursor.close()
+
+        return ret
+
+################################################################################################3
+
 @api_view(['GET'])
 def getRoomId(request):
     if request.method == 'GET':
@@ -77,24 +115,28 @@ def getRoomId(request):
 def getJadonsa(request):
     if request.method == 'GET':
         cnx = mysql.connector.connect(**config)
+
         date_ = request.GET.get('date', '20160209')
-        date_ = datetime.datetime.strptime(date_, '%Y%m%d').date()
+        dateLast_ = getLastDate2(cnx, date_)
+#        date_ = datetime.datetime.strptime(date_, '%Y%m%d').date()
+#        dateLast = datetime.datetime.strptime(dateLast_[0], '%Y%m%d').date()
 
-        cursor = cnx.cursor()
+        print("date_: " + date_)
+        print(dateLast_[0])
+
+        current = getJadonsaData(cnx, date_)
+#        print(current);
+
+        past = getJadonsaData(cnx, dateLast_[0])
+
+        for d in current:
+            for d2 in past:
+                if d['roomId'] == d2['roomId']:
+                    d['pastCount'] = d2['currentCount']
         
-        query = ('select * from jadonsa where date = %s')
-        cursor.execute(query, (date_, ))
-
-        ret = list()
-
-        for (roomId, date, junip, junchul, panmea, dopeasa, birth, currentCount, description) in cursor:
-            ret.append({'roomId': roomId, 'date': date, 'junip': junip, 'junchul': junchul, \
-			'panmea': panmea, 'dopeasa': dopeasa, 'birth': birth, 'currentCount': currentCount, 'description': description})
-
-        cursor.close()
         cnx.close()
 
-        return Response(ret)
+        return Response(current)
 
 @api_view(['GET'])
 def getJadonsaPandas(request):

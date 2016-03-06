@@ -32,27 +32,14 @@
             <div w3-test-directive></div>
             <br>
 
-<!--
-            <div ng-init="quantity=1;price=5">
-                <form method=post action="http://222.106.250.113:8000/setJadonsa/?format=json">
-                    
-                    Quantity: <input type="number"	ng-model="quantity">
-                    Costs:    <input type="number" ng-model="price">
-
-                    Total in dollar: {{ quantity * price }}
-                    <input type="submit" name="Submit"/>
-                    
-                </form>
-            </div>
--->
-            <br>
-            
             <p>Row Status : {{rowstatuscode}}</p>
             <p>Status : {{statuscode}}</p>
             <p> {{ tableData[0].roomId }}</p>
             <p> {{ tableData | filter:{roomId:"iyu1"} }}</p>
+            <p> {{ (tableData | filter:{roomId:"iyu1"})[0]['roomId'] }}</p>
 
 	<!-- http://aboooks.tistory.com/295 : html input property -->
+            <h1>JADONSA MANAGE</h1>
 
                 <form method=post action="http://222.106.250.113:8000/setJadonsa/?format=json">
 		<table>
@@ -70,65 +57,63 @@
 
 		  <tr ng-repeat="x in tableRowData">
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				{{ x.type1 + " " + x.type2 }}
+				{{ x.type1 + " " + x.type2 }} : {{ x.id }}
 			</td>
 
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" ng-model="quantity" class="mycell">
+				{{ (tableData | filter:{roomId:(x.id)})[0].pastCount }}
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" ng-model="quantity" class="mycell">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].junip }}" class="mycell" name="{{x.id}}_junip">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" ng-model="quantity" class="mycell">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].junchul }}" class="mycell" name="{{x.id}}_junchul">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" ng-model="quantity" class="mycell">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].panmea }}" class="mycell" name="{{x.id}}_panmea">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" ng-model="quantity" class="mycell">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].sopeasa }}" class="mycell" name="{{x.id}}_dopeasa">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="date" ng-model="quantity" class="mycell">
+				<input type="date" value="{{ (tableData | filter:{roomId:(x.id)})[0].birth }}" class="mycell" name="{{x.id}}_birth">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" ng-model="quantity" class="mycell">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].currentCount }}" class="mycell" name="{{x.id}}_currentCount">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="text" ng-model="quantity">
-                                {{ tableData | filter:{roomId:x.id} }}
+				<input type="text" value="{{ (tableData | filter:{roomId:(x.id)})[0].description }}" name="{{x.id}}_description">
 			</td>
 
 
 
 			<td ng-if="$even">
-				{{ x.type1 + " " + x.type2 }}
+				{{ x.type1 + " " + x.type2 }} : {{ x.id }}
 			</td>
 
 			<td ng-if="$even">
-				<input type="number" ng-model="quantity" class="mycell">
+				{{ (tableData | filter:{roomId:(x.id)})[0].pastCount }}
 			</td>
 			<td ng-if="$even">
-				<input type="number" ng-model="quantity" class="mycell">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].junip }}" class="mycell" name="{{x.id}}_junip">
 			</td>
 			<td ng-if="$even">
-				<input type="number" ng-model="quantity" class="mycell">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].junchul }}" class="mycell" name="{{x.id}}_junchul">
 			</td>
 			<td ng-if="$even">
-				<input type="number" ng-model="quantity" class="mycell">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].panmea }}" class="mycell" name="{{x.id}}_panmea">
 			</td>
 			<td ng-if="$even">
-				<input type="number" ng-model="quantity" class="mycell">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].sopeasa }}" class="mycell" name="{{x.id}}_dopeasa">
 			</td>
 			<td ng-if="$even">
-				<input type="date" ng-model="quantity" class="mycell">
+				<input type="date" value="{{ (tableData | filter:{roomId:(x.id)})[0].birth }}" class="mycell" name="{{x.id}}_birth">
 			</td>
 			<td ng-if="$even">
-				<input type="number" ng-model="quantity" class="mycell">
+				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].currentCount }}" class="mycell" name="{{x.id}}_currentCount">
 			</td>
 			<td ng-if="$even">
-				<input type="text" ng-model="quantity">
-                                {{ tableData | filter:{roomId:x.id} }}
+				<input type="text" value="{{ (tableData | filter:{roomId:(x.id)})[0].description }}" name="{{x.id}}_description">
 			</td>
 
 		  </tr>
