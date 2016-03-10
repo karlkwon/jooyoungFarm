@@ -40,6 +40,7 @@
 
 	<!-- http://aboooks.tistory.com/295 : html input property -->
             <h1>JADONSA MANAGE</h1>
+            <br>
 
                 <form method=post action="http://222.106.250.113:8000/setJadonsa/?format=json">
 		<table>
@@ -55,65 +56,65 @@
                             <td>비고</td>
                         </tr>
 
-		  <tr ng-repeat="x in tableRowData">
+		  <tr ng-repeat="x in tableData">
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				{{ x.type1 + " : " + x.type2 }}
+				{{ x.roomId.type1 + " : " + x.roomId.type2 }}
 			</td>
 
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				{{ (tableData | filter:{roomId:(x.id)})[0].pastCount }}
+				{{ x.pastCount }}
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].junip }}" class="mycell" name="{{x.id}}_junip">
+				<input type="number" value="{{ x.junip }}" class="mycell" name="{{x.roodId.id}}_junip">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].junchul }}" class="mycell" name="{{x.id}}_junchul">
+				<input type="number" value="{{ x.junchul }}" class="mycell" name="{{x.roodId.id}}_junchul">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].panmea }}" class="mycell" name="{{x.id}}_panmea">
+				<input type="number" value="{{ x.panmea }}" class="mycell" name="{{x.roodId.id}}_panmea">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].dopeasa }}" class="mycell" name="{{x.id}}_dopeasa">
+				<input type="number" value="{{ x.dopeasa }}" class="mycell" name="{{x.roodId.id}}_dopeasa">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="date" value="{{ (tableData | filter:{roomId:(x.id)})[0].birth }}" class="mycell" name="{{x.id}}_birth">
+				<input type="date" value="{{ x.birth }}" class="mycell" name="{{x.roodId.id}}_birth">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].currentCount }}" class="mycell" name="{{x.id}}_currentCount">
+				<input type="number" value="{{ x.currentCount }}" class="mycell" name="{{x.roodId.id}}_currentCount">
 			</td>
 			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="text" value="{{ (tableData | filter:{roomId:(x.id)})[0].description }}" name="{{x.id}}_description">
+				<input type="text" value="{{ x.description }}" name="{{x.roodId.id}}_description">
 			</td>
 
 
 
 			<td ng-if="$even">
-				{{ x.type1 + " : " + x.type2 }}
+				{{ x.roomId.type1 + " : " + x.roomId.type2 }}
 			</td>
 
 			<td ng-if="$even">
-				{{ (tableData | filter:{roomId:(x.id)})[0].pastCount }}
+				{{ x.pastCount }}
 			</td>
 			<td ng-if="$even">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].junip }}" class="mycell" name="{{x.id}}_junip">
+				<input type="number" value="{{ x.junip }}" class="mycell" name="{{x.roodId.id}}_junip">
 			</td>
 			<td ng-if="$even">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].junchul }}" class="mycell" name="{{x.id}}_junchul">
+				<input type="number" value="{{ x.junchul }}" class="mycell" name="{{x.roodId.id}}_junchul">
 			</td>
 			<td ng-if="$even">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].panmea }}" class="mycell" name="{{x.id}}_panmea">
+				<input type="number" value="{{ x.panmea }}" class="mycell" name="{{x.roodId.id}}_panmea">
 			</td>
 			<td ng-if="$even">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].dopeasa }}" class="mycell" name="{{x.id}}_dopeasa">
+				<input type="number" value="{{ x.dopeasa }}" class="mycell" name="{{x.roodId.id}}_dopeasa">
 			</td>
 			<td ng-if="$even">
-				<input type="date" value="{{ (tableData | filter:{roomId:(x.id)})[0].birth }}" class="mycell" name="{{x.id}}_birth">
+				<input type="date" value="{{ x.birth }}" class="mycell" name="{{x.roodId.id}}_birth">
 			</td>
 			<td ng-if="$even">
-				<input type="number" value="{{ (tableData | filter:{roomId:(x.id)})[0].currentCount }}" class="mycell" name="{{x.id}}_currentCount">
+				<input type="number" value="{{ x.currentCount }}" class="mycell" name="{{x.roodId.id}}_currentCount">
 			</td>
 			<td ng-if="$even">
-				<input type="text" value="{{ (tableData | filter:{roomId:(x.id)})[0].description }}" name="{{x.id}}_description">
+				<input type="text" value="{{ x.description }}" name="{{x.roodId.id}}_description">
 			</td>
 
 		  </tr>
@@ -140,12 +141,33 @@
                 $scope.tableRowData = response.data;
                 $scope.rowstatuscode = response.status;
 
-                    $http.get("http://222.106.250.113:8000/getJadonsa/?format=json")
-                    .then(function (response) {
-                        console.log(response);
-                        $scope.tableData = response.data;
-                        $scope.statuscode = response.status;
-                    });
+                tmpRows = response.data;
+                rowNames = {};
+                for(var jj in tmpRows) {
+                    tmp = tmpRows[jj];
+                    tmp['idx'] = jj;
+                    rowNames[tmp.id] = tmp;
+                }
+
+                $http.get("http://222.106.250.113:8000/getJadonsa/?format=json")
+                .then(function (response) {
+
+                    dd = response.data;
+                    d = [];
+                    for(var ii in dd) {
+                        tmp = dd[ii]
+                        tmp['idx']    = rowNames[tmp.roomId].idx;
+                        tmp['roomId'] = rowNames[tmp.roomId];
+                        d.push(tmp);
+
+                        console.log(tmp);
+                    }
+                    d.sort(function(a, b) {return a.idx - b.idx;});
+                    console.log(d);
+
+                    $scope.tableData = d;
+                    $scope.statuscode = response.status;
+                });
 
             });
         
