@@ -57,63 +57,32 @@
                         </tr>
 
 		  <tr ng-repeat="x in tableData">
-			<td ng-if="$odd" style="background-color:#f1f1f1">
+
+			<td style="{{ x.style }}">
 				{{ x.roomId.type1 + " : " + x.roomId.type2 }}
 			</td>
-
-			<td ng-if="$odd" style="background-color:#f1f1f1">
+			<td style="{{ x.style }}">
 				{{ x.pastCount }}
 			</td>
-			<td ng-if="$odd" style="background-color:#f1f1f1">
+			<td style="{{ x.style }}">
 				<input type="number" value="{{ x.junip }}" class="mycell" name="{{x.roodId.id}}_junip">
 			</td>
-			<td ng-if="$odd" style="background-color:#f1f1f1">
+			<td style="{{ x.style }}">
 				<input type="number" value="{{ x.junchul }}" class="mycell" name="{{x.roodId.id}}_junchul">
 			</td>
-			<td ng-if="$odd" style="background-color:#f1f1f1">
+			<td style="{{ x.style }}">
 				<input type="number" value="{{ x.panmea }}" class="mycell" name="{{x.roodId.id}}_panmea">
 			</td>
-			<td ng-if="$odd" style="background-color:#f1f1f1">
+			<td style="{{ x.style }}">
 				<input type="number" value="{{ x.dopeasa }}" class="mycell" name="{{x.roodId.id}}_dopeasa">
 			</td>
-			<td ng-if="$odd" style="background-color:#f1f1f1">
+			<td style="{{ x.style }}">
 				<input type="date" value="{{ x.birth }}" class="mycell" name="{{x.roodId.id}}_birth">
 			</td>
-			<td ng-if="$odd" style="background-color:#f1f1f1">
+			<td style="{{ x.style }}">
 				<input type="number" value="{{ x.currentCount }}" class="mycell" name="{{x.roodId.id}}_currentCount">
 			</td>
-			<td ng-if="$odd" style="background-color:#f1f1f1">
-				<input type="text" value="{{ x.description }}" name="{{x.roodId.id}}_description">
-			</td>
-
-
-
-			<td ng-if="$even">
-				{{ x.roomId.type1 + " : " + x.roomId.type2 }}
-			</td>
-
-			<td ng-if="$even">
-				{{ x.pastCount }}
-			</td>
-			<td ng-if="$even">
-				<input type="number" value="{{ x.junip }}" class="mycell" name="{{x.roodId.id}}_junip">
-			</td>
-			<td ng-if="$even">
-				<input type="number" value="{{ x.junchul }}" class="mycell" name="{{x.roodId.id}}_junchul">
-			</td>
-			<td ng-if="$even">
-				<input type="number" value="{{ x.panmea }}" class="mycell" name="{{x.roodId.id}}_panmea">
-			</td>
-			<td ng-if="$even">
-				<input type="number" value="{{ x.dopeasa }}" class="mycell" name="{{x.roodId.id}}_dopeasa">
-			</td>
-			<td ng-if="$even">
-				<input type="date" value="{{ x.birth }}" class="mycell" name="{{x.roodId.id}}_birth">
-			</td>
-			<td ng-if="$even">
-				<input type="number" value="{{ x.currentCount }}" class="mycell" name="{{x.roodId.id}}_currentCount">
-			</td>
-			<td ng-if="$even">
+			<td style="{{ x.style }}">
 				<input type="text" value="{{ x.description }}" name="{{x.roodId.id}}_description">
 			</td>
 
@@ -162,8 +131,17 @@
 
                         console.log(tmp);
                     }
+
                     d.sort(function(a, b) {return a.idx - b.idx;});
                     console.log(d);
+
+                    for(var ii in d) {
+                        if(ii % 2 == 0) {
+                            d[ii].style = "background-color:#f1f1f1";
+                        } else {
+                            d[ii].style = "";
+                        }
+                    }
 
                     $scope.tableData = d;
                     $scope.statuscode = response.status;
