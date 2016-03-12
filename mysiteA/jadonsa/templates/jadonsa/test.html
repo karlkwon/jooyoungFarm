@@ -42,7 +42,7 @@
             <h1>JADONSA MANAGE</h1>
             <br>
 
-                <form method=post action="http://222.106.250.113:8000/setJadonsa/?format=json">
+                <form>
 		<table>
                         <tr>
                             <td>NO</td>
@@ -56,40 +56,40 @@
                             <td>비고</td>
                         </tr>
 
-		  <tr ng-repeat="x in tableData">
+		  <tr ng-repeat="x in tableData track by $index">
 
 			<td style="{{ x.style }}">
-				{{ x.roomId.type1 + " : " + x.roomId.type2 }}
+				{{ tableData[$index].roomId.type1 + " : " + tableData[$index].roomId.type2 }}
 			</td>
 			<td style="{{ x.style }}">
-				{{ x.pastCount }}
+				{{ tableData[$index].pastCount }}
 			</td>
 			<td style="{{ x.style }}">
-				<input type="number" value="{{ x.junip }}" class="mycell" name="{{x.roomId.id}}_junip">
+				<input type="number" class="mycell" ng-model="tableData[$index].junip">
 			</td>
 			<td style="{{ x.style }}">
-				<input type="number" value="{{ x.junchul }}" class="mycell" name="{{x.roomId.id}}_junchul">
+				<input type="number" class="mycell" ng-model="tableData[$index].junchul">
 			</td>
 			<td style="{{ x.style }}">
-				<input type="number" value="{{ x.panmea }}" class="mycell" name="{{x.roomId.id}}_panmea">
+				<input type="number" class="mycell" ng-model="tableData[$index].panmea">
 			</td>
 			<td style="{{ x.style }}">
-				<input type="number" value="{{ x.dopeasa }}" class="mycell" name="{{x.roomId.id}}_dopeasa">
+				<input type="number" class="mycell" ng-model="tableData[$index].dopeasa">
 			</td>
 			<td style="{{ x.style }}">
-				<input type="date" value="{{ x.birth }}" class="mycell" name="{{x.roomId.id}}_birth">
+				<input type="date" class="mycell" ng-model="tableData[$index].birth">
 			</td>
 			<td style="{{ x.style }}">
-				<input type="number" value="{{ x.currentCount }}" class="mycell" name="{{x.roomId.id}}_currentCount">
+				<input type="number" class="mycell" ng-model="tableData[$index].currentCount">
 			</td>
 			<td style="{{ x.style }}">
-				<input type="text" value="{{ x.description }}" name="{{x.roomId.id}}_description">
+				<input type="text" ng-model="tableData[$index].description">
 			</td>
 
 		  </tr>
 		</table>
 
-                <input type="submit" name="Submit"/>
+                <button ng-click="reset()">RESET</button>
                 </form>
 
 
@@ -148,6 +148,21 @@
                 });
 
             });
+
+            $scope.reset = function() {
+		var req = {
+		 method: 'POST',
+		 url: 'http://222.106.250.113:8000/setJadonsa/?format=json',
+		 headers: {
+		   'Content-Type': 'application/json'
+		 },
+		 data: $scope.tableData
+		};
+
+		$http(req).then(function(response){
+			$location.path('http://222.106.250.113:8000/jadonsa');
+		});
+	    };
         
         });
             
