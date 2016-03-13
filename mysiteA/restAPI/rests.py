@@ -85,6 +85,21 @@ def getJadonsaData(cnx, date_ = None):
 
         return ret
 
+def setJadonsaData(cnx, data = None):
+        cursor = cnx.cursor()
+
+        query = ("insert into jadonsa "
+                 "(junip, panmea, junchul, roomId, currentCount, dopeasa, description, birth, date) "
+                 "values (%(junip)s, %(panmea)s, %(junchul)s, %(roomId)s, %(currentCount)s, %(dopeasa)s, %(description)s, %(birth)s, %(date)s)")
+        
+        for d in data:
+            cursor.execute(query, d)
+            cnx.commit()
+
+        cursor.close()
+
+
+
 ################################################################################################3
 
 @api_view(['GET'])
@@ -164,6 +179,10 @@ def setJadonsa(request):
     if request.method == 'POST':
         data = request.data #.get("data", 'empty')
         print(data);
+
+        cnx = mysql.connector.connect(**config)
+        setJadonsaData(cnx, data)
+        cnx.close()
 
         return Response(data)
 
